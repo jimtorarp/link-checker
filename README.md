@@ -2,6 +2,8 @@
 
 Checks for broken links and non-HTTPS URLs.
 
+Version 0.1.0. Check the installed version with `python link_checker.py --version`.
+
 A terminal crawler that discovers linked pages on one site, checks each discovered HTTP(S) URL once, and reports 403, 404, and non-HTTPS findings to the terminal and a CSV file.
 
 ## Install

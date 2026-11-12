@@ -27,6 +27,7 @@ from rich.text import Text
 
 
 USER_AGENT = "LinkChecker/1.0"
+__version__ = "0.1.0"
 DEFAULT_MAX_PAGES = 10_000
 DEFAULT_TIMEOUT = 10.0
 DEFAULT_DELAY = 0.25
@@ -678,6 +679,7 @@ def run(
     rate_tracker = UrlRateTracker(started_at=started_clock)
 
     console = Console(stderr=True, force_terminal=sys.stderr.isatty())
+    console.print(f"Link Checker {__version__}")
     console.print(f"Site: {escape(start_url)}")
     console.print(
         f"Page crawl scope: {escape(site_host)} (www alias included; other subdomains excluded)"
@@ -889,6 +891,11 @@ def run(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Find 404 and non-HTTPS links on a website.")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"link-checker {__version__}",
+    )
     parser.add_argument("url", nargs="?", help="site URL; prompted for when omitted")
     parser.add_argument("--csv", help="CSV output path; defaults to a unique site/date/time filename")
     parser.add_argument("--max-pages", type=int, default=DEFAULT_MAX_PAGES)

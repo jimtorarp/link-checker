@@ -78,6 +78,17 @@ class DurationFormatTests(unittest.TestCase):
         self.assertEqual(format_elapsed(3661), "1h 01m 01s")
 
 
+class CliVersionTests(unittest.TestCase):
+    def test_version_flag_prints_version_and_exits_successfully(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaises(SystemExit) as raised:
+                main(["--version"])
+
+        self.assertEqual(raised.exception.code, 0)
+        self.assertEqual(output.getvalue().strip(), "link-checker 0.1.0")
+
+
 class RequestPacerTests(unittest.TestCase):
     def test_wait_stops_promptly_when_canceled(self):
         pacer = RequestPacer()
@@ -397,6 +408,7 @@ class CrawlAndReportTests(unittest.TestCase):
 
             output_text = output.getvalue()
             self.assertEqual(exit_code, 0)
+            self.assertIn("Link Checker 0.1.0", output_text)
             self.assertLess(output_text.index("Discovery complete"), output_text.index("Checking"))
             self.assertIn("External links will be checked", output_text)
             self.assertIn("Worker limit: 4 concurrent page/link requests", output_text)
