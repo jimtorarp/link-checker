@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.py[cod]
+link_check_report.csv
+link_check_report_*.csv
